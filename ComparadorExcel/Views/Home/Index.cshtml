@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Comparador de Bases de Datos";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+
+        <h1 class="display-4 fw-bold text-primary">
+            Comparador de Bases de Datos
+        </h1>
+
+        <p class="lead text-muted">
+            Seleccione el módulo con el que desea trabajar.
+        </p>
+
+    </div>
+
+    <div class="row justify-content-center">
+
+        <!-- TARJETA ESTUDIANTES -->
+        <div class="col-lg-5 mb-4">
+
+            <div class="card shadow-lg h-100 border-0">
+
+                <div class="card-body text-center p-5">
+
+                    <div style="font-size:70px;">
+                        🎓
+                    </div>
+
+                    <h2 class="mt-3">
+                        Estudiantes
+                    </h2>
+
+                    <p class="text-muted">
+                        Compare estudiantes entre múltiples archivos Excel,
+                        encuentre registros repetidos y genere reportes.
+                    </p>
+
+                    <a asp-controller="Estudiantes"
+                       asp-action="Index"
+                       class="btn btn-primary btn-lg mt-3">
+
+                        Ingresar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TARJETA DOCENTES -->
+
+        <div class="col-lg-5 mb-4">
+
+            <div class="card shadow-lg h-100 border-0">
+
+                <div class="card-body text-center p-5">
+
+                    <div style="font-size:70px;">
+                        👨‍🏫
+                    </div>
+
+                    <h2 class="mt-3">
+                        Docentes
+                    </h2>
+
+                    <p class="text-muted">
+                        Compare docentes entre múltiples archivos Excel,
+                        detecte registros repetidos y genere reportes.
+                    </p>
+
+                    <a asp-controller="Docentes"
+                       asp-action="Index"
+                       class="btn btn-success btn-lg mt-3">
+
+                        Ingresar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

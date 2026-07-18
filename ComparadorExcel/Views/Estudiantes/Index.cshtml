@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Comparador de Estudiantes";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary">Comparador de Estudiantes</h1>
+        <p class="text-muted">
+            Seleccione uno o varios archivos Excel para encontrar estudiantes repetidos.
+        </p>
+    </div>
+
+    <div class="card shadow-lg">
+
+        <div class="card-header bg-primary text-white">
+            Cargar archivos Excel
+        </div>
+
+        <div class="card-body">
+
+            <form asp-controller="Estudiantes"
+                  asp-action="Comparar"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Seleccione los archivos
+                    </label>
+
+                    <input
+                        type="file"
+                        class="form-control"
+                        name="archivos"
+                        multiple
+                        accept=".xlsx,.xls"/>
+
+                </div>
+
+                <button class="btn btn-success btn-lg">
+                    Comparar archivos
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

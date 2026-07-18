@@ -1,0 +1,245 @@
+﻿@model ComparadorExcel.Models.ResultadoViewModel
+
+@{
+    ViewData["Title"] = "Resultado de Docentes";
+}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 text-success">
+        Resultado de la comparación de docentes
+    </h2>
+
+    <!-- RESUMEN -->
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="card border-primary shadow">
+                <div class="card-body text-center">
+                    <h3>@Model.TotalArchivos</h3>
+                    <small>Archivos analizados</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-success shadow">
+                <div class="card-body text-center">
+                    <h3>@Model.TotalRegistros</h3>
+                    <small>Docentes leídos</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-warning shadow">
+                <div class="card-body text-center">
+                    <h3>@Model.TotalRepetidos</h3>
+                    <small>Docentes repetidos</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-danger shadow">
+                <div class="card-body text-center">
+                    <h3>@Model.TotalSinDocumento</h3>
+                    <small>Sin documento</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+            Docentes repetidos
+        </div>
+
+        <div class="card-body">
+
+            @if (Model.Resultados.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-hover">
+
+                        <thead class="table-dark">
+
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Veces</th>
+                                <th>Programas / Áreas</th>
+                                <th>Instituciones</th>
+                                <th>Archivos</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var docente in Model.Resultados)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @docente.Documento
+                                    </td>
+
+                                    <td>
+                                        @docente.Nombre
+                                    </td>
+
+                                    <td>
+                                        @foreach (var telefono in docente.Telefonos)
+                                        {
+                                            <div>
+                                                @telefono
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @foreach (var correo in docente.Correos)
+                                        {
+                                            <div>
+                                                @correo
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @docente.Cantidad
+                                    </td>
+
+                                    <td>
+                                        @foreach (var programa in docente.Programas)
+                                        {
+                                            <div>
+                                                @programa
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @foreach (var institucion in docente.Instituciones)
+                                        {
+                                            <div>
+                                                @institucion
+                                            </div>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @foreach (var archivo in docente.Archivos)
+                                        {
+                                            <div>
+                                                @archivo
+                                            </div>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No se encontraron docentes repetidos.
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- BOTONES -->
+    <div class="mt-4 d-flex gap-2">
+
+        <!-- DESCARGAR EXCEL -->
+        <form asp-controller="Docentes"
+              asp-action="DescargarExcel"
+              method="post">
+
+            @for (int i = 0; i < Model.Resultados.Count; i++)
+            {
+                <input type="hidden"
+                       name="resultados[@i].Documento"
+                       value="@Model.Resultados[i].Documento" />
+
+                <input type="hidden"
+                       name="resultados[@i].Nombre"
+                       value="@Model.Resultados[i].Nombre" />
+
+                <input type="hidden"
+                       name="resultados[@i].Cantidad"
+                       value="@Model.Resultados[i].Cantidad" />
+
+                @foreach (var telefono in Model.Resultados[i].Telefonos)
+                {
+                    <input type="hidden"
+                           name="resultados[@i].Telefonos"
+                           value="@telefono" />
+                }
+
+                @foreach (var correo in Model.Resultados[i].Correos)
+                {
+                    <input type="hidden"
+                           name="resultados[@i].Correos"
+                           value="@correo" />
+                }
+
+                @foreach (var programa in Model.Resultados[i].Programas)
+                {
+                    <input type="hidden"
+                           name="resultados[@i].Programas"
+                           value="@programa" />
+                }
+
+                @foreach (var institucion in Model.Resultados[i].Instituciones)
+                {
+                    <input type="hidden"
+                           name="resultados[@i].Instituciones"
+                           value="@institucion" />
+                }
+
+                @foreach (var archivo in Model.Resultados[i].Archivos)
+                {
+                    <input type="hidden"
+                           name="resultados[@i].Archivos"
+                           value="@archivo" />
+                }
+            }
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                📊 Descargar resultados en Excel
+
+            </button>
+
+        </form>
+
+        <!-- VOLVER -->
+        <a asp-controller="Docentes"
+           asp-action="Index"
+           class="btn btn-secondary">
+
+            Volver
+
+        </a>
+
+    </div>
+
+</div>
