@@ -13,4 +13,7 @@ public class ResultadoViewModel
     public int TotalRepetidos { get; set; }
 
     public int TotalSinDocumento { get; set; }
+
+    // Archivos que no pudieron ser procesados
+    public List<RegistroConError> Errores { get; set; } = new();
 }

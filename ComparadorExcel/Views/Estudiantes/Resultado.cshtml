@@ -52,6 +52,71 @@
     </div>
 
 
+    <!-- ARCHIVOS CON ERROR -->
+    @if (Model.Errores.Any())
+    {
+        <div class="card border-danger shadow mb-4">
+
+            <div class="card-header bg-danger text-white">
+                ⚠️ Archivos que no pudieron ser procesados
+            </div>
+
+            <div class="card-body">
+
+                <p>
+                    Los siguientes archivos presentaron errores y fueron omitidos
+                    de la comparación:
+                </p>
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped">
+
+                        <thead class="table-danger">
+
+                            <tr>
+
+                                <th>
+                                    Archivo
+                                </th>
+
+                                <th>
+                                    Motivo
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var error in Model.Errores)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @error.Archivo
+                                    </td>
+
+                                    <td>
+                                        @error.Motivo
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+
     <!-- TABLA DE RESULTADOS -->
     <div class="card shadow">
 
@@ -71,17 +136,29 @@
 
                             <tr>
 
-                                <th>Documento</th>
+                                <th>
+                                    Documento
+                                </th>
 
-                                <th>Nombre</th>
+                                <th>
+                                    Nombre
+                                </th>
 
-                                <th>Veces</th>
+                                <th>
+                                    Veces
+                                </th>
 
-                                <th>Programas / Áreas</th>
+                                <th>
+                                    Programas / Áreas
+                                </th>
 
-                                <th>Instituciones</th>
+                                <th>
+                                    Instituciones
+                                </th>
 
-                                <th>Archivos</th>
+                                <th>
+                                    Archivos
+                                </th>
 
                             </tr>
 
@@ -106,30 +183,36 @@
                                     </td>
 
                                     <td>
+
                                         @foreach (var programa in estudiante.Programas)
                                         {
                                             <div>
                                                 @programa
                                             </div>
                                         }
+
                                     </td>
 
                                     <td>
+
                                         @foreach (var institucion in estudiante.Instituciones)
                                         {
                                             <div>
                                                 @institucion
                                             </div>
                                         }
+
                                     </td>
 
                                     <td>
+
                                         @foreach (var archivo in estudiante.Archivos)
                                         {
                                             <div>
                                                 @archivo
                                             </div>
                                         }
+
                                     </td>
 
                                 </tr>
@@ -144,7 +227,9 @@
             else
             {
                 <div class="alert alert-info">
+
                     No se encontraron estudiantes repetidos.
+
                 </div>
             }
 
@@ -157,54 +242,14 @@
     <div class="mt-4 d-flex gap-2">
 
         <!-- DESCARGAR EXCEL -->
-        <form asp-controller="Estudiantes"
-              asp-action="DescargarExcel"
-              method="post">
+        <a asp-controller="Estudiantes"
+           asp-action="DescargarExcel"
+           asp-route-id="@ViewBag.ReporteId"
+           class="btn btn-success">
 
-            @for (int i = 0; i < Model.Resultados.Count; i++)
-            {
-                <input type="hidden"
-                       name="resultados[@i].Documento"
-                       value="@Model.Resultados[i].Documento" />
+            📊 Descargar resultados en Excel
 
-                <input type="hidden"
-                       name="resultados[@i].Nombre"
-                       value="@Model.Resultados[i].Nombre" />
-
-                <input type="hidden"
-                       name="resultados[@i].Cantidad"
-                       value="@Model.Resultados[i].Cantidad" />
-
-                @foreach (var programa in Model.Resultados[i].Programas)
-                {
-                    <input type="hidden"
-                           name="resultados[@i].Programas"
-                           value="@programa" />
-                }
-
-                @foreach (var institucion in Model.Resultados[i].Instituciones)
-                {
-                    <input type="hidden"
-                           name="resultados[@i].Instituciones"
-                           value="@institucion" />
-                }
-
-                @foreach (var archivo in Model.Resultados[i].Archivos)
-                {
-                    <input type="hidden"
-                           name="resultados[@i].Archivos"
-                           value="@archivo" />
-                }
-            }
-
-            <button type="submit"
-                    class="btn btn-success">
-
-                📊 Descargar resultados en Excel
-
-            </button>
-
-        </form>
+        </a>
 
 
         <!-- VOLVER -->

@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ExcelService>();
 builder.Services.AddScoped<ComparadorService>();
 builder.Services.AddScoped<ReporteExcelService>();
+builder.Services.AddSingleton<ReporteTemporalService>();
 
 var app = builder.Build();
 
